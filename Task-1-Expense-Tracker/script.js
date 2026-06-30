@@ -33,3 +33,5 @@ form.onsubmit = e => {
 function delTx(i) { data.splice(i, 1); render(); }
 document.getElementById('clear').onclick = () => { if (confirm('Clear all?')) { data = []; render(); } }
 render();
+
+
