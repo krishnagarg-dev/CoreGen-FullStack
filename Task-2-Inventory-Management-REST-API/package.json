@@ -1,0 +1,27 @@
+{
+  "name": "task-2-inventory-management-rest-api",
+  "version": "1.0.0",
+  "description": "Inventory Management REST API built using Node.js and Express.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api",
+    "inventory-management",
+    "backend"
+  ],
+  "author": "Krishna Garg",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
