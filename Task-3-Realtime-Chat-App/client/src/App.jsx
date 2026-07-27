@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:5000");
@@ -7,26 +7,37 @@ function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const sendMessage = () => {
-    if (message.trim() === "") return;
-
-    socket.emit("send_message", message);
-    setMessage("");
-  };
-
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessages((prev) => [...prev, data]);
+    socket.on("connect", () => {
+      console.log("✅ Connected:", socket.id);
     });
 
-    return () => socket.off("receive_message");
+    socket.on("receive_message", (msg) => {
+      console.log("📥", msg);
+      setMessages((prev) => [...prev, msg]);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("receive_message");
+    };
   }, []);
+
+  const sendMessage = () => {
+    if (!message.trim()) return;
+
+    console.log("📤", message);
+
+    socket.emit("send_message", message);
+
+    setMessage("");
+  };
 
   return (
     <div
       style={{
-        maxWidth: "500px",
-        margin: "50px auto",
+        width: "500px",
+        margin: "40px auto",
         fontFamily: "Arial",
       }}
     >
@@ -34,19 +45,36 @@ function App() {
 
       <input
         type="text"
-        placeholder="Type a message..."
         value={message}
+        placeholder="Type message..."
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") sendMessage();
+        }}
         style={{
-          width: "70%",
+          width: "75%",
           padding: "10px",
-          marginRight: "10px",
         }}
       />
 
-      <button onClick={sendMessage}>Send</button>
+      <button
+        onClick={sendMessage}
+        style={{
+          padding: "10px 20px",
+          marginLeft: "10px",
+        }}
+      >
+        Send
+      </button>
 
-      <div style={{ marginTop: "20px" }}>
+      <div
+        style={{
+          marginTop: "20px",
+          border: "1px solid #ccc",
+          padding: "10px",
+          minHeight: "250px",
+        }}
+      >
         {messages.map((msg, index) => (
           <p key={index}>🟢 {msg}</p>
         ))}
