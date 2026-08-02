@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import Chat from "./pages/Chat";
 
 function App() {

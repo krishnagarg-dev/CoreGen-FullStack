@@ -1,23 +1,45 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  User,
+  Globe,
+  Lock,
+  KeyRound,
+} from "lucide-react";
+import { motion } from "framer-motion";
+
+import AuroraBackground from "../components/AuroraBackground";
+import GlassCard from "../components/GlassCard";
+import InputField from "../components/InputField";
+import AnimatedButton from "../components/AnimatedButton";
+import Logo from "../components/Logo";
+
+import ModeCard from "../components/ModeCard";
+import StatsCard from "../components/StatsCard";
+
 import { useSocket } from "../context/SocketContext";
 
-function Login() {
-  const navigate = useNavigate();
-  const { socket, connected } = useSocket();
-
+export default function Login() {
   const [username, setUsername] = useState("");
-  const [roomCode, setRoomCode] = useState("");
+  const [room, setRoom] = useState("");
   const [mode, setMode] = useState("global");
 
-  const handleContinue = () => {
+  const navigate = useNavigate();
+
+  const { socket } = useSocket();
+
+  const handleJoin = () => {
     if (!username.trim()) {
-      alert("Enter your username");
+      alert("Please enter your username.");
       return;
     }
 
+    // GLOBAL CHAT
+
     if (mode === "global") {
-      socket.emit("join_global", { username });
+      socket.emit("join_global", {
+        username,
+      });
 
       navigate("/chat", {
         state: {
@@ -26,32 +48,37 @@ function Login() {
           type: "global",
         },
       });
+
+      return;
     }
 
-    if (mode === "create") {
-      socket.emit("create_room", { username });
+    // CREATE ROOM
 
-      socket.once("room_created", (data) => {
+    if (mode === "create") {
+      socket.emit("create_room", {
+        username,
+      });
+
+      socket.once("room_created", ({ roomCode }) => {
         navigate("/chat", {
           state: {
             username,
-            room: data.roomCode,
+            room: roomCode,
             type: "private",
           },
         });
       });
+
+      return;
     }
 
-    if (mode === "join") {
-      if (!roomCode.trim()) {
-        alert("Enter Room Code");
-        return;
-      }
+    // JOIN ROOM
+    socket.emit("join_room", {
+      username,
+      roomCode: room.toUpperCase(),
+    });
 
-      socket.emit("join_room", {
-        username,
-        roomCode,
-      });
+    socket.once("joined_room", ({ roomCode }) => {
 
       navigate("/chat", {
         state: {
@@ -60,106 +87,233 @@ function Login() {
           type: "private",
         },
       });
-    }
+
+    });
+
+    socket.once("error_message", ({ message }) => {
+
+      alert(message);
+
+    });
   };
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "#0f172a",
-        color: "white",
-      }}
-    >
-      <div
-        style={{
-          width: 380,
-          padding: 30,
-          borderRadius: 20,
-          background: "#1e293b",
-        }}
-      >
-        <h1 style={{ textAlign: "center" }}>Link&Sync</h1>
+    <>
+      <AuroraBackground />
 
-        <p style={{ textAlign: "center" }}>
-          {connected ? "🟢 Connected" : "🔴 Connecting"}
-        </p>
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-28 items-center max-w-7xl w-full">
 
-        <input
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{
-            width: "100%",
-            padding: 12,
-            marginTop: 20,
-            marginBottom: 20,
-          }}
-        />
+          {/* LEFT */}
 
-        <div>
-          <label>
-            <input
-              type="radio"
-              checked={mode === "global"}
-              onChange={() => setMode("global")}
-            />
-            Global Chat
-          </label>
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="hidden lg:flex flex-col justify-center"
+          >
 
-          <br />
+            <Logo />
 
-          <label>
-            <input
-              type="radio"
-              checked={mode === "create"}
-              onChange={() => setMode("create")}
-            />
-            Create Room
-          </label>
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: .2 }}
+              className="mt-12 text-6xl xl:text-7xl font-black leading-tight tracking-tight"
+            >
 
-          <br />
+              <span className="text-white">
 
-          <label>
-            <input
-              type="radio"
-              checked={mode === "join"}
-              onChange={() => setMode("join")}
-            />
-            Join Room
-          </label>
+                Connect.
+
+                <br />
+
+                Chat.
+
+                <br />
+
+              </span>
+
+              <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
+
+                Collaborate.
+
+              </span>
+
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: .35 }}
+              className="mt-8 max-w-lg text-lg leading-8 text-slate-300"
+            >
+
+              Premium realtime messaging platform with beautiful animations,
+              private rooms and lightning-fast communication.
+
+            </motion.p>
+
+            <div className="grid grid-cols-3 gap-5 mt-12">
+
+              <StatsCard
+                icon="👥"
+                value="250+"
+                label="Users"
+              />
+
+              <StatsCard
+                icon="💬"
+                value="80K+"
+                label="Messages"
+              />
+
+              <StatsCard
+                icon="⚡"
+                value="99.9%"
+                label="Realtime"
+              />
+
+            </div>
+
+          </motion.div>
+
+          {/* RIGHT */}
+          <div className="flex justify-center lg:justify-end">
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: .7,
+                delay: .2,
+              }}
+            >
+
+              <GlassCard>
+
+                {/* Badge */}
+
+                <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-2">
+
+                  <span className="text-lg">🚀</span>
+
+                  <span className="text-xs font-semibold text-violet-300 uppercase tracking-wider">
+                    Link&Sync
+                  </span>
+
+                </div>
+
+                {/* Heading */}
+
+                <h2 className="mt-6 text-4xl font-black text-white">
+
+                  Welcome Back 👋
+
+                </h2>
+
+                <p className="mt-2 text-slate-400 leading-7">
+
+                  Start chatting in seconds with beautiful realtime messaging.
+
+                </p>
+
+                {/* Username */}
+
+                <div className="mt-8">
+
+                  <InputField
+                    icon={<User size={18} />}
+                    placeholder="Enter Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+
+                </div>
+
+                {/* Chat Mode */}
+
+                <div className="mt-8 space-y-3">
+
+                  <ModeCard
+                    active={mode === "global"}
+                    icon="🌍"
+                    title="Global Chat"
+                    subtitle="Chat with everyone online"
+                    onClick={() => setMode("global")}
+                  />
+
+                  <ModeCard
+                    active={mode === "create"}
+                    icon="➕"
+                    title="Create Room"
+                    subtitle="Generate a private room"
+                    onClick={() => setMode("create")}
+                  />
+
+                  <ModeCard
+                    active={mode === "join"}
+                    icon="🔑"
+                    title="Join Room"
+                    subtitle="Enter room code"
+                    onClick={() => setMode("join")}
+                  />
+
+                </div>
+
+                {/* Room */}
+
+                {mode === "join" && (
+
+                  <div className="mt-5">
+
+                    <InputField
+                      icon={<KeyRound size={18} />}
+                      placeholder="Room Code"
+                      value={room}
+                      onChange={(e) =>
+                        setRoom(e.target.value.toUpperCase())
+                      }
+                    />
+
+                  </div>
+
+                )}
+
+                {/* Button */}
+
+                <div className="mt-8">
+
+                  <AnimatedButton
+                    onClick={handleJoin}
+                  >
+
+                    Continue
+
+                  </AnimatedButton>
+
+                </div>
+
+                {/* Footer */}
+
+                <div className="mt-7 flex justify-center gap-6 text-xs text-slate-500">
+
+                  <span>⚡ Realtime</span>
+
+                  <span>🔒 Secure</span>
+
+                  <span>🌍 Global</span>
+
+                </div>
+
+              </GlassCard>
+
+            </motion.div>
+
+          </div>
+
         </div>
-
-        {mode === "join" && (
-          <input
-            placeholder="Room Code"
-            value={roomCode}
-            onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-            style={{
-              width: "100%",
-              padding: 12,
-              marginTop: 20,
-            }}
-          />
-        )}
-
-        <button
-          onClick={handleContinue}
-          style={{
-            width: "100%",
-            marginTop: 25,
-            padding: 12,
-            cursor: "pointer",
-          }}
-        >
-          Continue
-        </button>
       </div>
-    </div>
+    </>
   );
 }
-
-export default Login;

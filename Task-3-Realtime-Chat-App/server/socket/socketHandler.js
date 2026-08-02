@@ -2,7 +2,31 @@ import { users, rooms } from "../data/store.js";
 import { generateRoomCode } from "../utils/roomGenerator.js";
 
 export const socketHandler = (io) => {
+
+  const emitOnlineUsers = () => {
+
+    const allUsers = Array.from(users.values());
+
+    // Global Room
+    io.to("GLOBAL").emit(
+      "online_users",
+      allUsers.filter((user) => user.room === "GLOBAL")
+    );
+
+    // Private Rooms
+    rooms.forEach((_, roomCode) => {
+      io.to(roomCode).emit(
+        "online_users",
+        allUsers.filter((user) => user.room === roomCode)
+      );
+    });
+
+    console.log("ONLINE USERS =>", allUsers);
+
+  };
+
   io.on("connection", (socket) => {
+
     console.log(`🟢 ${socket.id} connected`);
 
     // ===========================
@@ -10,6 +34,7 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("join_global", ({ username }) => {
+
       users.set(socket.id, {
         username,
         room: "GLOBAL",
@@ -26,7 +51,8 @@ export const socketHandler = (io) => {
         }),
       });
 
-      io.emit("online_users", Array.from(users.values()));
+      emitOnlineUsers();
+
     });
 
     // ===========================
@@ -34,6 +60,7 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("create_room", ({ username }) => {
+
       const roomCode = generateRoomCode();
 
       rooms.set(roomCode, []);
@@ -60,7 +87,8 @@ export const socketHandler = (io) => {
         }),
       });
 
-      io.emit("online_users", Array.from(users.values()));
+      emitOnlineUsers();
+
     });
 
     // ===========================
@@ -68,21 +96,30 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("join_room", ({ username, roomCode }) => {
-      if (!rooms.has(roomCode)) {
-        socket.emit("error_message", "Invalid Room Code");
+
+      const code = roomCode.toUpperCase();
+
+      if (!rooms.has(code)) {
+        socket.emit("error_message", {
+          message: "Invalid Room Code",
+        });
         return;
       }
 
       users.set(socket.id, {
         username,
-        room: roomCode,
+        room: code,
       });
 
-      rooms.get(roomCode).push(socket.id);
+      rooms.get(code).push(socket.id);
 
-      socket.join(roomCode);
+      socket.join(code);
 
-      io.to(roomCode).emit("system_message", {
+      socket.emit("joined_room", {
+        roomCode: code,
+      });
+
+      io.to(code).emit("system_message", {
         username: "System",
         message: `${username} joined the room`,
         time: new Date().toLocaleTimeString([], {
@@ -91,7 +128,8 @@ export const socketHandler = (io) => {
         }),
       });
 
-      io.emit("online_users", Array.from(users.values()));
+      emitOnlineUsers();
+
     });
 
     // ===========================
@@ -99,6 +137,7 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("send_message", ({ message }) => {
+
       const user = users.get(socket.id);
 
       if (!user) return;
@@ -112,6 +151,7 @@ export const socketHandler = (io) => {
           minute: "2-digit",
         }),
       });
+
     });
 
     // ===========================
@@ -119,11 +159,13 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("typing", () => {
+
       const user = users.get(socket.id);
 
       if (!user) return;
 
       socket.to(user.room).emit("typing", user.username);
+
     });
 
     // ===========================
@@ -131,6 +173,7 @@ export const socketHandler = (io) => {
     // ===========================
 
     socket.on("disconnect", () => {
+
       const user = users.get(socket.id);
 
       if (!user) return;
@@ -145,22 +188,27 @@ export const socketHandler = (io) => {
       });
 
       if (rooms.has(user.room)) {
+
         const updatedRoom = rooms
           .get(user.room)
           .filter((id) => id !== socket.id);
 
-        if (updatedRoom.length === 0 && user.room !== "GLOBAL") {
+        if (updatedRoom.length === 0) {
           rooms.delete(user.room);
         } else {
           rooms.set(user.room, updatedRoom);
         }
+
       }
 
       users.delete(socket.id);
 
-      io.emit("online_users", Array.from(users.values()));
+      emitOnlineUsers();
 
       console.log(`🔴 ${socket.id} disconnected`);
+
     });
+
   });
+
 };
