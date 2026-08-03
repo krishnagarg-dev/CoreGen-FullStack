@@ -194,33 +194,46 @@ export default function Login() {
 
                 {/* Badge */}
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-2">
+                <div className="flex justify-center">
 
-                  <span className="text-lg">🚀</span>
-
-                  <span className="text-xs font-semibold text-violet-300 uppercase tracking-wider">
-                    Link&Sync
-                  </span>
+                  <div className="
+  h-16
+  w-16
+  rounded-full
+  bg-gradient-to-br
+  from-violet-600
+  to-pink-500
+  flex
+  items-center
+  justify-center
+  text-3xl
+  shadow-xl
+  ">
+                    👋
+                  </div>
 
                 </div>
-
                 {/* Heading */}
 
-                <h2 className="mt-6 text-4xl font-black text-white">
+                <div className="mt-7 text-center">
 
-                  Welcome Back 👋
+                  <h2 className="text-5xl font-black text-white">
+                    Welcome Back
+                  </h2>
 
-                </h2>
+                  <p className="mt-3 text-lg text-slate-400">
+                    Glad to see you again! 👋
+                  </p>
 
-                <p className="mt-2 text-slate-400 leading-7">
-
-                  Start chatting in seconds with beautiful realtime messaging.
-
-                </p>
+                </div>
 
                 {/* Username */}
 
                 <div className="mt-8">
+
+                  <label className="block mb-3 text-sm font-medium text-slate-300">
+                    Username
+                  </label>
 
                   <InputField
                     icon={<User size={18} />}
@@ -313,7 +326,7 @@ export default function Login() {
           </div>
 
         </div>
-      </div>
+      </div >
     </>
   );
 }

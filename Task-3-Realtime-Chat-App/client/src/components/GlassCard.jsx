@@ -1,89 +1,36 @@
-import { useState } from "react";
-import {
-  Hand,
-  Globe,
-  Lock,
-  KeyRound,
-  Shield,
-  ArrowRight,
-} from "lucide-react";
+import { motion } from "framer-motion";
 
-import InputField from "./InputField";
-import ModeCard from "./ModeCard";
-import AnimatedButton from "./AnimatedButton";
-
-const GlassCard = () => {
-  const [selectedMode, setSelectedMode] = useState("global");
-
+export default function GlassCard({ children }) {
   return (
-    <div className="glass-card">
+    <motion.div
+      initial={{ opacity: 0, x: 40 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: .6 }}
+      className="
+      relative
+      w-full
+      max-w-[560px]
+      overflow-hidden
+      rounded-[36px]
+      border
+      border-white/10
+      bg-[#171C2A]/95
+      backdrop-blur-3xl
+      shadow-[0_30px_80px_rgba(0,0,0,.45)]
+      px-10
+      py-10
+      "
+    >
+      {/* Top Border */}
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-violet-500 via-pink-500 to-fuchsia-500" />
 
-      {/* Floating Stars */}
-      <span className="star star-1"></span>
-      <span className="star star-2"></span>
-      <span className="star star-3"></span>
-      <span className="star star-4"></span>
+      {/* Glow */}
+      <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-violet-600/20 blur-[110px]" />
+      <div className="absolute -bottom-24 -left-24 h-56 w-56 rounded-full bg-pink-600/15 blur-[110px]" />
 
-      {/* Top Icon */}
-      <div className="welcome-icon">
-        <Hand size={28} />
+      <div className="relative z-10">
+        {children}
       </div>
-
-      {/* Heading */}
-      <h1 className="glass-title">
-        Welcome Back
-      </h1>
-
-      <p className="glass-subtitle">
-        Glad to see you again! 👋
-      </p>
-
-      {/* Username */}
-      <InputField />
-
-      {/* Modes */}
-      <p className="mode-heading">
-        Choose how you want to start chatting
-      </p>
-
-      <ModeCard
-        active={selectedMode === "global"}
-        onClick={() => setSelectedMode("global")}
-        icon={<Globe size={28} />}
-        title="Global Chat"
-        description="Join and chat with everyone around the world"
-      />
-
-      <ModeCard
-        active={selectedMode === "private"}
-        onClick={() => setSelectedMode("private")}
-        icon={<Lock size={28} />}
-        title="Create Private Room"
-        description="Create your own room and invite your friends"
-      />
-
-      <ModeCard
-        active={selectedMode === "join"}
-        onClick={() => setSelectedMode("join")}
-        icon={<KeyRound size={28} />}
-        title="Join Existing Room"
-        description="Enter a room code and join instantly"
-      />
-
-      {/* Button */}
-      <AnimatedButton
-        text="Enter Link&Sync"
-        icon={<ArrowRight size={28} />}
-      />
-
-      {/* Footer */}
-      <div className="glass-footer">
-        <Shield size={18} />
-        <span>Your conversations are secure and private</span>
-      </div>
-
-    </div>
+    </motion.div>
   );
-};
-
-export default GlassCard;
+}
