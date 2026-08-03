@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export const socket = io("http://localhost:5000", {
+export const socket = io("https://link-sync-backend.onrender.com", {
   autoConnect: false,
   reconnection: true,
   reconnectionAttempts: Infinity,
