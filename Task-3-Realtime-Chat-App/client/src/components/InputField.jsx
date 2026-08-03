@@ -34,12 +34,6 @@ export default function InputField({
           focus-within:shadow-[0_0_25px_rgba(139,92,246,.25)]
         "
       >
-        {/* Left Icon */}
-        <User
-          size={20}
-          className="absolute left-5 text-slate-500 group-focus-within:text-violet-400"
-        />
-
         <input
           type={type}
           value={value}
@@ -49,8 +43,7 @@ export default function InputField({
             h-full
             w-full
             bg-transparent
-            pl-14
-            pr-5
+            px-5
             text-white
             outline-none
             placeholder:text-slate-500
