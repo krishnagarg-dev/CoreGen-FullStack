@@ -89,6 +89,11 @@ export const socketHandler = (io) => {
 
       emitOnlineUsers();
 
+      socket.emit(
+        "online_users",
+        Array.from(users.values()).filter((u) => u.room === roomCode)
+      );
+
     });
 
     // ===========================
@@ -129,6 +134,11 @@ export const socketHandler = (io) => {
       });
 
       emitOnlineUsers();
+
+      socket.emit(
+        "online_users",
+        Array.from(users.values()).filter((u) => u.room === code)
+      );
 
     });
 
