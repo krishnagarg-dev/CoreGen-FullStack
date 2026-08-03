@@ -101,9 +101,8 @@ export default function Login() {
     <>
       <AuroraBackground />
 
-      <div className="min-h-screen flex items-center justify-center px-6">
-        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-28 items-center max-w-7xl w-full">
-
+      <div className="min-h-screen flex items-center justify-center px-4 py-6 lg:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] items-center gap-8 lg:gap-24 max-w-7xl w-full">
           {/* LEFT */}
 
           <motion.div
@@ -179,8 +178,7 @@ export default function Login() {
           </motion.div>
 
           {/* RIGHT */}
-          <div className="flex justify-center lg:justify-end">
-
+          <div className="flex justify-center items-center w-full">
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -196,44 +194,38 @@ export default function Login() {
 
                 <div className="flex justify-center">
 
-                  <div className="
-  h-16
-  w-16
-  rounded-full
-  bg-gradient-to-br
-  from-violet-600
-  to-pink-500
-  flex
-  items-center
-  justify-center
-  text-3xl
-  shadow-xl
-  ">
+                  <div className="h-14 
+                  w-14
+                  sm:h-16
+                  sm:w-16
+                  text-2xl
+                  sm:text-3xl
+                  rounded-full
+                  bg-gradient-to-br
+                  from-violet-600
+                  to-pink-500
+                  flex
+                  items-center
+                  justify-center
+                  shadow-xl">
                     👋
                   </div>
 
                 </div>
-                {/* Heading */}
+                {/* Heading */}<div className="mt-4 text-center">
 
-                <div className="mt-7 text-center">
-
-                  <h2 className="text-5xl font-black text-white">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
                     Welcome Back
                   </h2>
 
-                  <p className="mt-3 text-lg text-slate-400">
+                  <p className="mt-2 text-sm sm:text-base lg:text-lg text-slate-400">
                     Glad to see you again! 👋
                   </p>
 
                 </div>
-
                 {/* Username */}
 
                 <div className="mt-8">
-
-                  <label className="block mb-3 text-sm font-medium text-slate-300">
-                    Username
-                  </label>
 
                   <InputField
                     icon={<User size={18} />}
@@ -309,8 +301,7 @@ export default function Login() {
 
                 {/* Footer */}
 
-                <div className="mt-7 flex justify-center gap-6 text-xs text-slate-500">
-
+                <div className="mt-5 flex flex-wrap justify-center gap-3 text-xs text-slate-500">
                   <span>⚡ Realtime</span>
 
                   <span>🔒 Secure</span>

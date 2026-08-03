@@ -20,8 +20,10 @@ export default function ModeCard({
         overflow-hidden
         rounded-3xl
         border
-        px-5
-        py-4
+        px-4
+        sm:px-5
+        py-3
+        sm:py-4
         text-left
         transition-all
         duration-300
@@ -33,17 +35,20 @@ export default function ModeCard({
         }
       `}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
 
         {/* Left */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-1 min-w-0 items-center gap-3">
 
           {/* Icon */}
           <div
             className="
               flex
-              h-12
-              w-12
+              h-10
+              w-10
+              sm:h-12
+              sm:w-12
+              shrink-0
               items-center
               justify-center
               rounded-xl
@@ -59,14 +64,16 @@ export default function ModeCard({
           </div>
 
           {/* Text */}
-          <div>
-            <h3 className="text-lg font-semibold text-white">
+          <div className="min-w-0 flex-1">
+
+            <h3 className="truncate text-base sm:text-lg font-semibold text-white">
               {title}
             </h3>
 
-            <p className="mt-1 text-[13px] leading-5 text-slate-400">
+            <p className="mt-1 text-xs sm:text-[13px] leading-4 sm:leading-5 text-slate-400 break-words">
               {subtitle}
             </p>
+
           </div>
 
         </div>
@@ -75,8 +82,11 @@ export default function ModeCard({
         <div
           className={`
             flex
-            h-6
-            w-6
+            h-5
+            w-5
+            sm:h-6
+            sm:w-6
+            shrink-0
             items-center
             justify-center
             rounded-full
@@ -93,8 +103,10 @@ export default function ModeCard({
         >
           <div
             className={`
-              h-3
-              w-3
+              h-2.5
+              w-2.5
+              sm:h-3
+              sm:w-3
               rounded-full
               bg-violet-500
               transition-all

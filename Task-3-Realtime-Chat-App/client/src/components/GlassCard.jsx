@@ -5,20 +5,36 @@ export default function GlassCard({ children }) {
     <motion.div
       initial={{ opacity: 0, x: 40 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: .6 }}
+      transition={{ duration: 0.6 }}
       className="
-      relative
-      w-full
-      max-w-[560px]
-      overflow-hidden
-      rounded-[36px]
-      border
-      border-white/10
-      bg-[#171C2A]/95
-      backdrop-blur-3xl
-      shadow-[0_30px_80px_rgba(0,0,0,.45)]
-      px-10
-      py-10
+        relative
+        w-full
+        max-w-[360px]
+        sm:max-w-[460px]
+        lg:max-w-[560px]
+
+        overflow-hidden
+
+        rounded-[24px]
+        sm:rounded-[32px]
+        lg:rounded-[36px]
+
+        border
+        border-white/10
+
+        bg-[#171C2A]/95
+        backdrop-blur-3xl
+
+        shadow-[0_30px_80px_rgba(0,0,0,.45)]
+
+        px-5
+        py-6
+
+        sm:px-8
+        sm:py-8
+
+        lg:px-10
+        lg:py-10
       "
     >
       {/* Top Border */}
