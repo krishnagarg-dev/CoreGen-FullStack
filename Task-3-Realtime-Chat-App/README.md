@@ -169,31 +169,6 @@ FRONTEND_URL=http://localhost:5173
 
 ---
 
-# 📸 Screenshots
-
-### Login Page
-
-(Add Screenshot Here)
-
----
-
-### Global Chat
-
-(Add Screenshot Here)
-
----
-
-### Private Room
-
-(Add Screenshot Here)
-
----
-
-### Mobile Responsive UI
-
-(Add Screenshot Here)
-
----
 
 # 🚀 Deployment
 
@@ -258,7 +233,7 @@ https://github.com/krishnagarg-dev
 
 LinkedIn
 
-(Add LinkedIn URL)
+https://www.linkedin.com/in/krishnagarg-dev/
 
 ---
 
