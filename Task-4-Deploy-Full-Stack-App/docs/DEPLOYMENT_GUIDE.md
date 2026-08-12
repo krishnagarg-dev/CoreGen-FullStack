@@ -61,19 +61,19 @@ PORT=
 After deployment, record:
 
 ```text
-https://<your-service>.onrender.com
+https://merijob-backend.onrender.com
 ```
 
 ---
 
 ## 4. Vercel Frontend
 
-Set the frontend API variable to the Render backend URL.
+Set the frontend API variable to the Render backend URL (if the variable is used by the frontend build).
 
 Example:
 
 ```env
-VITE_API_URL=https://<your-service>.onrender.com
+VITE_API_URL=https://merijob-backend.onrender.com
 ```
 
 Build:
@@ -93,20 +93,14 @@ Deploy through Vercel.
 Record:
 
 ```text
-https://<your-project>.vercel.app
+https://meri-job.vercel.app/
 ```
 
 ---
 
 ## 5. CORS
 
-Set the backend production frontend URL:
-
-```env
-FRONTEND_URL=https://<your-project>.vercel.app
-```
-
-Redeploy the backend after changing the variable.
+The current backend uses Express `cors()` middleware (`app.use(cors())`), so no separate `FRONTEND_URL` variable is required for the current deployment.
 
 ---
 

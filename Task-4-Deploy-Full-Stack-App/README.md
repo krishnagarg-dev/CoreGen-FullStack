@@ -129,7 +129,7 @@ The application uses a React frontend and a Node.js/Express backend connected to
 The complete source code is maintained separately.
 
 **MeriJob GitHub Repository:**  
-`[ADD MERIJOB GITHUB REPOSITORY URL]`
+`https://github.com/krishnagarg-dev/MeriJob`
 
 This repository is used for the application source code. The current CoreGen repository documents the deployment process and final deployment evidence.
 
@@ -272,7 +272,6 @@ MONGO_URI=<MONGODB_ATLAS_CONNECTION_STRING>
 JWT_SECRET=<PRODUCTION_JWT_SECRET>
 ADZUNA_APP_ID=<ADZUNA_APP_ID>
 ADZUNA_APP_KEY=<ADZUNA_APP_KEY>
-FRONTEND_URL=<VERCEL_FRONTEND_URL>
 PORT=5000
 ```
 
@@ -292,24 +291,16 @@ Verify that:
 ## Backend URL
 
 ```text
-[ADD RENDER BACKEND URL]
+https://merijob-backend.onrender.com
 ```
 
 ---
 
 # 9. Production CORS Configuration
 
-The backend must allow requests from the deployed frontend.
+The deployed backend currently uses Express CORS middleware (`cors()`) so the production frontend can make API requests.
 
-The production frontend URL should be configured using an environment variable.
-
-Example:
-
-```env
-FRONTEND_URL=https://your-vercel-app.vercel.app
-```
-
-The backend CORS configuration should use the production frontend URL instead of relying only on localhost.
+The current backend uses `app.use(cors())` and therefore does not require a separate `FRONTEND_URL` variable for the deployed API. The production frontend communicates with the Render API over HTTPS.
 
 ### Local vs production
 
@@ -322,7 +313,7 @@ http://localhost:5173
 Production:
 
 ```text
-https://your-vercel-app.vercel.app
+https://meri-job.vercel.app/
 ```
 
 After changing the CORS configuration, redeploy the backend.
@@ -352,12 +343,12 @@ Install Command: npm install
 
 ## Step 3 – Configure API Environment Variable
 
-The frontend must point to the deployed backend instead of localhost.
+The production frontend points to the deployed Render backend instead of localhost.
 
 Example:
 
 ```env
-VITE_API_URL=https://your-render-backend.onrender.com
+VITE_API_URL=https://merijob-backend.onrender.com
 ```
 
 The actual variable name must match the one used by the application.
@@ -371,7 +362,7 @@ After deployment, open the Vercel URL and test the application.
 ## Frontend URL
 
 ```text
-[ADD VERCEL FRONTEND URL]
+https://meri-job.vercel.app/
 ```
 
 ---
@@ -387,7 +378,6 @@ MONGO_URI=
 JWT_SECRET=
 ADZUNA_APP_ID=
 ADZUNA_APP_KEY=
-FRONTEND_URL=
 PORT=
 ```
 
@@ -524,25 +514,25 @@ Do not include screenshots that expose:
 
 Before submitting the task:
 
-- [ ] Source code repository link added
-- [ ] MongoDB Atlas configured
-- [ ] Backend deployed to Render
-- [ ] Frontend deployed to Vercel
-- [ ] Production environment variables configured
-- [ ] CORS configured for production frontend
-- [ ] Frontend production build succeeds
-- [ ] Live frontend opens successfully
-- [ ] Backend API responds successfully
-- [ ] Database connection works
-- [ ] Authentication tested
-- [ ] Jobs tested
-- [ ] Job details tested
-- [ ] Saved jobs tested
-- [ ] Applications tested
-- [ ] Dashboard tested
-- [ ] Logout tested
-- [ ] Screenshots/evidence added
-- [ ] No secrets committed to GitHub
+- [x] Source code repository link added
+- [x] MongoDB Atlas configured
+- [x] Backend deployed to Render
+- [x] Frontend deployed to Vercel
+- [x] Production environment variables configured
+- [x] CORS configured for production frontend
+- [x] Frontend production build succeeds
+- [x] Live frontend opens successfully
+- [x] Backend API responds successfully
+- [x] Database connection works
+- [x] Authentication tested
+- [x] Jobs tested
+- [x] Job details tested
+- [x] Saved jobs tested
+- [x] Applications tested
+- [x] Dashboard tested
+- [x] Logout tested
+- [ ] Screenshots/evidence added (add actual screenshots to `screenshots/` before submission if required)
+- [x] No secrets committed to GitHub
 
 ---
 
@@ -550,15 +540,15 @@ Before submitting the task:
 
 ### Frontend
 
-`[ADD VERCEL URL]`
+`https://meri-job.vercel.app/`
 
 ### Backend
 
-`[ADD RENDER URL]`
+`https://merijob-backend.onrender.com`
 
 ### Source Code
 
-`[ADD MERIJOB GITHUB URL]`
+`https://github.com/krishnagarg-dev/MeriJob`
 
 ---
 

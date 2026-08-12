@@ -9,7 +9,6 @@ MONGO_URI=
 JWT_SECRET=
 ADZUNA_APP_ID=
 ADZUNA_APP_KEY=
-FRONTEND_URL=
 PORT=5000
 ```
 
@@ -21,11 +20,13 @@ Create this locally as `client/.env`:
 VITE_API_URL=http://localhost:5000
 ```
 
-For production, configure the same variable through Vercel:
+For production, the deployed backend URL is:
 
 ```env
-VITE_API_URL=https://<your-render-backend>.onrender.com
+VITE_API_URL=https://merijob-backend.onrender.com
 ```
+
+Note: the current frontend API calls use the production Render URL directly; keep this variable for centralized production configuration if the code is later refactored to read it.
 
 ## Important
 

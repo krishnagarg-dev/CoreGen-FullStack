@@ -1,45 +1,43 @@
 # Deployment Notes
 
-Use this file as a short deployment journal.
-
 ## Date
 
-[ADD DATE]
+12 August 2026
 
 ## Backend
 
 Platform: Render
 
 URL:
-[ADD URL]
+https://merijob-backend.onrender.com
 
 Deployment status:
-[ADD STATUS]
+Live / Ready
 
 ## Frontend
 
 Platform: Vercel
 
 URL:
-[ADD URL]
+https://meri-job.vercel.app/
 
 Deployment status:
-[ADD STATUS]
+Live / Ready
+
+## Source Code
+
+https://github.com/krishnagarg-dev/MeriJob
 
 ## Database
 
 Platform: MongoDB Atlas
 
-Cluster:
-[ADD CLUSTER NAME IF REQUIRED]
-
 Connection status:
-[ADD STATUS]
+Connected successfully during production deployment.
 
 ## CORS
 
-Production frontend URL configured in backend:
-[ADD URL]
+The backend currently uses Express `cors()` middleware, allowing the deployed frontend to communicate with the API.
 
 ## Production Build
 
@@ -50,12 +48,12 @@ npm run build
 ```
 
 Result:
-[ADD RESULT]
+Successful Vite production build.
 
 ## Final Testing
 
 Completed:
-[YES/NO]
+YES
 
 Notes:
-[ADD NOTES]
+The live application was tested for registration, login, jobs, job details, saved jobs, applications, dashboard functionality, and production API connectivity.
